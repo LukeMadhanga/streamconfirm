@@ -7,10 +7,11 @@
  *      'Another button name': function_to_run_on_click [, ...]
  *  }
  * @param {string} moreinfo [optional] A short message to display to the user below the main question
+ * @param {object(plain)} opts [optional] More options to construct this function
  */
-var streamConfirm = function (message, callback, moreinfo) {
+var streamConfirm = function (message, callback, moreinfo, opts) {
     
-    return new stream_confirm(message, callback, moreinfo);
+    return new stream_confirm(message, callback, moreinfo, opts);
     
 };
 
@@ -23,8 +24,9 @@ var streamConfirm = function (message, callback, moreinfo) {
  *      'Another button name': function_to_run_on_click [, ...]
  *  }
  * @param {string} moreinfo [optional] A short message to display to the user below the main question
+ * @param {object(plain)} opts [optional] More options to construct this function
  */
-function stream_confirm(message, callback, moreinfo) {
+function stream_confirm(message, callback, moreinfo, opts) {
     
     /**
      * An alias to 'this'
@@ -43,6 +45,10 @@ function stream_confirm(message, callback, moreinfo) {
             return 'confirm';
         }
     };
+    
+    if (!opts) {
+        opts = {};
+    }
     
     /**
      * Build the dialogue
@@ -78,7 +84,9 @@ function stream_confirm(message, callback, moreinfo) {
                     '</div>' + 
                 '</div>' + 
             '</div>');
-        $('#streamconfirmbtns > span').click(function () {
+        var scm = $('#streamconfirmmain');
+        scm.css({marginTop: - scm.height() / 2});
+        $('#streamconfirmbtns > span').unbind('click').click(function () {
             var func = $(this).data('caconfirmfunc');
             if (self.functions[func]) {
                 $('#streamconfirm').remove();
@@ -107,7 +115,10 @@ function stream_confirm(message, callback, moreinfo) {
             }
             self.functions = callback;
         }
-        outtext += '<span data-caconfirmfunc="cancel">Cancel</span>';
+        if (!opts.nocancel) {
+            // Only add the 'cancel' button if the user permits
+            outtext += '<span data-caconfirmfunc="cancel">Cancel</span>';
+        }
         return outtext;
     }
     
