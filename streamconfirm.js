@@ -59,7 +59,7 @@ function stream_confirm(message, callback, moreinfo, opts) {
             $('head').append(
 '<style id="strcon">' + 
 '#streamconfirm {position: fixed;top: 0;left:0;width: 100%;height: 100%;font-family: inherit;}' +
-'#streamconfirmover {top: 0;left: 0;background: #000;width: 100%;height: 100%;opacity: 0.3;z-index: 1000;position: fixed;}'+
+'#streamconfirmover {top: 0;left: 0;width: 100%;height: 100%;z-index: 1000;position: fixed;}'+
 '#streamconfirmmain {top: 50%;background: #FFF;max-width: 500px;width: 80%;z-index: 1001;padding: 20px 20px 10px;' +
 'box-sizing: border-box;box-shadow: 0px 0px 1px #000;position: relative;margin: -60px auto;}' +
 '#streamconfirmmore {font-size: 12px;padding: 10px 0;}' +
