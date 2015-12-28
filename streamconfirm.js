@@ -55,24 +55,6 @@ function stream_confirm(message, callback, moreinfo, opts) {
      */
     function build() {
         moreinfo = moreinfo === undefined ? '' : moreinfo;
-        if (!$('style[id="strcon"]').length) {
-            $('head').append(
-'<style id="strcon">' + 
-'#streamconfirm {position: fixed;top: 0;left:0;width: 100%;height: 100%;font-family: inherit;z-index:3000;}' +
-'#streamconfirmover {top: 0;left: 0;width: 100%;height: 100%;z-index: 1000;position: fixed;}'+
-'#streamconfirmmain {top: 50%;background: #FFF;max-width: 500px;width: 80%;z-index: 1001;padding: 20px 20px 10px;' +
-'box-sizing: border-box;box-shadow: 0px 0px 1px #000;position: relative;margin: -60px auto;}' +
-'#streamconfirmmore {font-size: 12px;padding: 10px 0;}' +
-'#streamconfirmquest {font-weight: bold;font-size: 20px;}' +
-'#streamconfirmbtns {border-top: solid thin #DFDFDF;padding: 10px 0 0;text-align: right;}' +
-'#streamconfirmbtns > span {padding: 5px 15px;background: #7CCBFF;margin: 0 0 0 10px;border-radius: 3px;color: #FFF;' +
-'text-shadow: 0px 0px 1px #008FFF;box-shadow: 0px -1px 0px #8EA9FF;cursor: pointer;position: relative;display: inline-block;' +
-'cursor: pointer;}' +
-'[data-caconfirmfunc="cancel"] {background: #990000 !important;box-shadow: 0px -1px 0px #bb0000 !important;' +
-'text-shadow: 0px 0px 1px #cc0000 !important;}' + 
-'</style>'
-);
-        }
         $('body').append(
             '<div id="streamconfirm">' + 
                 '<div id="streamconfirmover"></div>' + 
@@ -106,18 +88,18 @@ function stream_confirm(message, callback, moreinfo, opts) {
         var outtext = '';
         if (typeof callback === 'function') {
             self.functions.confirm = callback;
-            outtext += '<span data-caconfirmfunc="confirm">Okay</span>';
+            outtext += '<span class="streamconfirmactionbtn" data-caconfirmfunc="confirm">Okay</span>';
         } else if (Object.prototype.toString.call(callback) === '[object Object]') {
             // We've been given a list of buttons and functions to run when they're clicked
             for (var x in callback) {
                 self.functions[x] = callback[x];
-                outtext += '<span data-caconfirmfunc="' + x + '">' + x + '</span>';
+                outtext += '<span class="streamconfirmactionbtn" data-caconfirmfunc="' + x + '">' + x + '</span>';
             }
             self.functions = callback;
         }
         if (!opts.nocancel) {
             // Only add the 'cancel' button if the user permits
-            outtext += '<span data-caconfirmfunc="cancel">Cancel</span>';
+            outtext += '<span class="streamconfirmactionbtn" data-caconfirmfunc="cancel">Cancel</span>';
         }
         return outtext;
     }
